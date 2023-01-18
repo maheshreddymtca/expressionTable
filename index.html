@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="http://pedlinux17.uk.evolving.com:8080/tnm6/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="http://pedlinux17.uk.evolving.com:8080/tnm6/js/bootstrap.min.js"></script>
+    <script src="https://github.com/fent/randexp.js/releases/download/v0.4.3/randexp.min.js"></script>
+  </head>
+  <body>
+   
+    <div class="container">
+      <div class="row m-2">
+        <div class="col-md-2">
+          <label for="">Expression</label>
+        </div>
+        <div class="col-md-10 d-flex">
+          <input type="text" class="form-control" id="inputRegExp" placeholder="3XYZAA9" value="3XYZAA9"/><button class="btn btn-secondary" onclick="getRange()" >Submit</button>
+        </div>
+      </div>
+      <table class="table table-bordered">
+        <thead class="thead-dark text-center">
+          <tr>
+            <tr>
+              <th>Index</th>
+              <th>Type</th>
+              <th>Format</th>
+            </tr>
+          </tr>
+        </thead>
+      <tbody id="tbody">
+        
+        
+      </tbody>
+    </table>
+   
+  </div>
+    <script>
+      
+
+      function getRange(){
+        var getinputValue = document.getElementById('inputRegExp').value;
+        //get Alpha values
+        let regex = /[^a-z]/gi;
+        var alphabets = getinputValue.replace(regex, "");
+        let afterDuplicates = alphabets
+          .split("")
+          .filter(function (value, index, self) {
+            return self.indexOf(value) == index;
+          })
+          .join("");
+        console.log("Out put 2>>", afterDuplicates);
+        var len = afterDuplicates.length;
+        var trData = "";
+        for(var i = 0; i < len; i ++){
+          console.log(afterDuplicates[i]);
+          trData += "<tr><td>"+afterDuplicates[i]+"</td><td><select class='form-control changeType range' onchange='onchangeType(event)'><option value='range'>Range</option><option value='set'>Set</option></select></td><td><div class='rangeInput'><select  class='form-control'><option value='0'>0</option></select><span>To</span><select  class='form-control'><option value='0'>0</option></select></div><div class='setInput' style='display:none'><input type='text' class='inputSet' /></div></td></tr>";
+        }
+        //document.getElementById("tbody").innerHTML = tr;
+        $("#tbody").append(trData);
+      }
+     function onchangeType(event){
+        var typeValue = event.target.value;
+        if(typeValue == 'range'){
+          $(this).parent().siblings().find('.rangeInput').show();
+           $(this).parent().siblings().find('.setInput').hide();
+        }else{
+          $("."+event.target.classList[2]).parent().siblings().find('.setInput').show();
+          $("."+event.target.classList[2]).parent().siblings().find('.rangeInput').hide();
+        }
+      }
+    </script>
+  </body>
+</html>
