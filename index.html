@@ -65,11 +65,21 @@
           .join("");
         var len = afterDuplicates.length;
         var trData = "";
-        $('.tbody').empty();
+        $('#tbody').empty();
+        var getnumber = '';
+          for(var j=0; j<=9; j++){
+            getnumber+="<option value="+j+">"+j+"</option>";
+          }
         for(var i = 0; i < len; i ++){
           
-          trData += "<tr><td>"+afterDuplicates[i]+"</td><td><select class='form-control changeType range' ><option value='range'>Range</option><option value='set'>Set</option></select></td><td><div class='rangeInput'><select  class='form-control'><option value="+i+">"+i+"</option></select><span>To</span><select  class='form-control'><option value='0'>0</option></select></div><div class='setInput' style='display:none'><input type='text' class='form-control inputSet' /></div></td></tr>";
-          
+          trData += "<tr><td>"+afterDuplicates[i]+"</td><td><select class='form-control changeType range'>"
+            +"<option value='range'>Range</option><option value='set'>Set</option></select></td>"
+            +"<td><div class='rangeInput'><select  class='form-control startNumber'>"
+            +getnumber
+            +"</select><span>To</span><select  class='form-control'>"
+            +"<option value='0'></option>"
+            +"</select></div>"
+            +"<div class='setInput' style='display:none'><input type='text' class='form-control inputSet' /></div></td></tr>";
         }
         $("#tbody").append(trData);
       }
@@ -85,6 +95,15 @@
           $(this).parent().siblings().find('.setInput').show();
           $(this).parent().siblings().find('.rangeInput').hide();
         }
+      });
+      $('body').on('change','.startNumber',function(event) {
+        var startVal = event.target.value;
+        console.log(startVal)
+        var remainingVal = '';
+        for(let i = parseInt(startVal)+1; i<=9; i++){
+          remainingVal+= "<option>"+i+"</option>";
+        }
+        $($(this).siblings()[1]).empty().append(remainingVal);
       });
     </script>
   </body>
